@@ -6,7 +6,7 @@
 // document.cookie='name=bob';
 // console.log(document.cookie);
 
-ShowNewUser(localStorage)
+
 let btn=document.querySelector('.btn')
 let namebox=document.querySelector('#name')
 let emailbox=document.querySelector('#email')
