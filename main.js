@@ -33,9 +33,12 @@ let myobj_deserialized=JSON.parse(localStorage.getItem("myobj"));
 console.log(myobj_deserialized);
 
 //make new
-let ele=document.createElement('h2');
+let cent=document.getElementById('newdiv');
+
+let ele=document.createElement('li');
 ele.appendChild(document.createTextNode(`Name = ${myobj_deserialized.name}`));
-document.body.appendChild(ele)
-let ag=document.createElement('h2');
+//document.body.appendChild(ele)
+cent.appendChild(ele)
+let ag=document.createElement('li');
 ag.appendChild(document.createTextNode(`Age = ${myobj_deserialized.age}`));
-document.body.appendChild(ag);
+cent.appendChild(ag);
