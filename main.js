@@ -17,4 +17,5 @@ btn.addEventListener('click',(e)=>{
     localStorage.clear();
     localStorage.setItem('Name', namebox.value);
     localStorage.setItem('Email', emailbox.value);
+    
 })
