@@ -14,14 +14,14 @@ let i=0;
 
 //scan all existing element from localStorage 
 window.addEventListener("DOMContentLoaded",() => {
-    console.log("Testing...")
+    console.log("Testing...");
     const localStorageobj=localStorage;
     const localStoragekeys= Object.keys(localStorageobj);
 
     for(var i=0;i<localStoragekeys.length;i++){
         const key = localStoragekeys[i]
         const userdetailsStrings= localStorageobj[key];
-        const userdeailsObj = JSON.parse(userdetailsStrings)
+        const userdeailsObj = JSON.parse(userdetailsStrings);
         ShowNewUser(userdeailsObj)
     }
 });
@@ -32,26 +32,30 @@ btn.addEventListener('click',(e)=>{
     
     let myobj={
         name:namebox.value,
-        email:emailbox.value
+        email:emailbox.value,
     };
 
     let myobj_serialized=JSON.stringify(myobj);
     localStorage.setItem(myobj.email,myobj_serialized);
-    //let myobj_deserialized=JSON.parse(localStorage.getItem(myobj.email));
+    // let myobj_deserialized=JSON.parse(localStorage.getItem(myobj.email));
+    // console.log(myobj_deserialized)
     ShowNewUser(myobj) 
 })
 
 function ShowNewUser(userdetails){
-    if(localStorage.getItem(userdetails.email)!==null){
-        //alert("already existing user")
-        //removeUserFromScreen(myobj.email)
+    document.getElementById('email').value='';
+    document.getElementById('name').value='';
+
+    if(localStorage.getItem(userdetails.email)!== null){
+        //console.log(userdetails.email)
+        removeUserFromScreen(userdetails.email)
     }
 
     let MainNodeVariable=document.getElementById('itemss');
     let childHtml=`<li id=${userdetails.email}> 
                         <b>Name:</b> ${userdetails.name} -<b> Email:</b> ${userdetails.email} 
                         <button onclick=deleteser('${userdetails.email}')> Remove </button> 
-                        <button> edit </button> 
+                        <button onclick=removeuser('${userdetails.email}','${userdetails.name}')> edit </button> 
                     </li> `;
     MainNodeVariable.innerHTML=MainNodeVariable.innerHTML + childHtml;
 }
@@ -67,6 +71,17 @@ function deleteser(userid){
 function removeUserFromScreen(userid){
     const parentNode=document.getElementById('itemss');
     const childNodeToBeDeleted = document.getElementById(userid);
-    parentNode.removeChild(childNodeToBeDeleted);
+    if(childNodeToBeDeleted){
+        parentNode.removeChild(childNodeToBeDeleted);
+    }
+}
 
+//edit user details
+function removeuser(useremail, username){
+    let Namebox=document.getElementById('name');
+    let EmailBox=document.getElementById('email');
+
+    Namebox.value = username;
+    EmailBox.value = useremail;
+    deleteser(useremail)
 }
