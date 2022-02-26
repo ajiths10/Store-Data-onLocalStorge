@@ -12,6 +12,7 @@ let namebox=document.querySelector('#name')
 let emailbox=document.querySelector('#email')
 let i=0;
 
+//scan all existing element from localStorage 
 window.addEventListener("DOMContentLoaded",() => {
     console.log("Testing...")
     const localStorageobj=localStorage;
@@ -25,7 +26,7 @@ window.addEventListener("DOMContentLoaded",() => {
     }
 });
 
-
+//Adding new user details
 btn.addEventListener('click',(e)=>{
     e.preventDefault();
     
@@ -33,29 +34,39 @@ btn.addEventListener('click',(e)=>{
         name:namebox.value,
         email:emailbox.value
     };
-    let myobj_serialized=JSON.stringify(myobj);
-    //console.log(myobj_serialized)
-    localStorage.setItem(myobj.email,myobj_serialized);
-    //console.log(localStorage);
-    let myobj_deserialized=JSON.parse(localStorage.getItem(myobj.email));
-    //console.log(myobj_deserialized);
-    
-    // //make new
-    // let cent=document.getElementById('newdiv');
-    // let ele=document.createElement('li');
-    // ele.appendChild(document.createTextNode(`Name = ${myobj_deserialized.name}`));
-    // //document.body.appendChild(ele)
-    // cent.appendChild(ele)
-    // let ag=document.createElement('li');
-    // ag.appendChild(document.createTextNode(`Email = ${myobj_deserialized.email}`));
-    // cent.appendChild(ag);
 
-   ShowNewUser(myobj) 
+    let myobj_serialized=JSON.stringify(myobj);
+    localStorage.setItem(myobj.email,myobj_serialized);
+    //let myobj_deserialized=JSON.parse(localStorage.getItem(myobj.email));
+    ShowNewUser(myobj) 
 })
 
 function ShowNewUser(userdetails){
+    if(localStorage.getItem(userdetails.email)!==null){
+        //alert("already existing user")
+        //removeUserFromScreen(myobj.email)
+    }
+
     let MainNodeVariable=document.getElementById('itemss');
-    let childHtml=`<li> <b>Name:</b> ${userdetails.name} -<b> Email:</b> ${userdetails.email} </li> `;
+    let childHtml=`<li id=${userdetails.email}> 
+                        <b>Name:</b> ${userdetails.name} -<b> Email:</b> ${userdetails.email} 
+                        <button onclick=deleteser('${userdetails.email}')> Remove </button> 
+                        <button> edit </button> 
+                    </li> `;
     MainNodeVariable.innerHTML=MainNodeVariable.innerHTML + childHtml;
 }
 
+//remove details from the localstorage
+function deleteser(userid){
+    console.log(userid);
+    localStorage.removeItem(userid);
+    removeUserFromScreen(userid);
+}
+
+//remove user from the frontend
+function removeUserFromScreen(userid){
+    const parentNode=document.getElementById('itemss');
+    const childNodeToBeDeleted = document.getElementById(userid);
+    parentNode.removeChild(childNodeToBeDeleted);
+
+}
