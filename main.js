@@ -11,6 +11,21 @@ let btn=document.querySelector('.btn')
 let namebox=document.querySelector('#name')
 let emailbox=document.querySelector('#email')
 let i=0;
+
+window.addEventListener("DOMContentLoaded",() => {
+    console.log("Testing...")
+    const localStorageobj=localStorage;
+    const localStoragekeys= Object.keys(localStorageobj);
+
+    for(var i=0;i<localStoragekeys.length;i++){
+        const key = localStoragekeys[i]
+        const userdetailsStrings= localStorageobj[key];
+        const userdeailsObj = JSON.parse(userdetailsStrings)
+        ShowNewUser(userdeailsObj)
+    }
+});
+
+
 btn.addEventListener('click',(e)=>{
     e.preventDefault();
     
@@ -40,7 +55,7 @@ btn.addEventListener('click',(e)=>{
 
 function ShowNewUser(userdetails){
     let MainNodeVariable=document.getElementById('itemss');
-    let childHtml=`<li> ${userdetails.name} - ${userdetails.email} </li> `;
+    let childHtml=`<li> <b>Name:</b> ${userdetails.name} -<b> Email:</b> ${userdetails.email} </li> `;
     MainNodeVariable.innerHTML=MainNodeVariable.innerHTML + childHtml;
 }
 
